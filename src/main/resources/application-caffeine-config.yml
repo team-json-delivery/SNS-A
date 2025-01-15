@@ -1,0 +1,4 @@
+caffeine:
+  spec:
+    caches:
+      es-user: maximumSize=100000, expireAfterWrite=300s, recordStats

@@ -1,0 +1,16 @@
+server:
+  port: 8008
+  shutdown: graceful
+
+spring:
+  application:
+    name: social-network-service
+  jackson:
+    serialization:
+      indent_output: true
+  profiles:
+    include:
+      - caffeine-config
+      - web-config
+
+
