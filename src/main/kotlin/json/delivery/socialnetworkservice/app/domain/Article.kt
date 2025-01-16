@@ -6,9 +6,9 @@ class Article private constructor(
     val id: String?,
     val authorId: UserId,
     val createdAt: Long,
+    private val likes: MutableList<UserId>,
     private var content: String,
-    private var updatedAt: Long,
-    private var likes: ArrayList<UserId>
+    private var updatedAt: Long
 ) {
     fun addLike(userId: UserId) {
         likes.add(userId)
