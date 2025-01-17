@@ -1,10 +1,10 @@
 package json.delivery.socialnetworkservice.app.domain.relation
 
 import json.delivery.socialnetworkservice.app.domain.UserId
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 class Following(
     val userId: UserId,
 ) {
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    val createdAt: ZonedDateTime = ZonedDateTime.now()
 }

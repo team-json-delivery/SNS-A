@@ -1,7 +1,7 @@
 package json.delivery.socialnetworkservice.app.domain.relation
 
 import json.delivery.socialnetworkservice.app.domain.UserId
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 class Relation(
     val userId: UserId,
@@ -11,17 +11,17 @@ class Relation(
     val followings: List<Following>
         get() = _followings.values.toList()
 
-    val createdAt: LocalDateTime = LocalDateTime.now()
-    var updatedAt: LocalDateTime = LocalDateTime.now()
+    val createdAt: ZonedDateTime = ZonedDateTime.now()
+    var updatedAt: ZonedDateTime = ZonedDateTime.now()
 
     fun following(followingId: UserId) {
         _followings[followingId] = Following(followingId)
-        updatedAt = LocalDateTime.now()
+        updatedAt = ZonedDateTime.now()
     }
 
     fun unFollowing(followingId: UserId) {
         _followings.remove(followingId)
-        updatedAt = LocalDateTime.now()
+        updatedAt = ZonedDateTime.now()
     }
 }
 
