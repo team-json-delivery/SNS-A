@@ -1,13 +1,9 @@
-package json.delivery.socialnetworkservice.app.domain.relation
+package json.delivery.socialnetworkservice.app.domain
 import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldBeEmpty
-import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
-import json.delivery.socialnetworkservice.app.domain.UserId
 
 @DisplayName("Relation")
 class RelationTest : DescribeSpec({

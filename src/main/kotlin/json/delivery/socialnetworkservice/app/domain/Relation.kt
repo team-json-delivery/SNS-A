@@ -1,6 +1,5 @@
-package json.delivery.socialnetworkservice.app.domain.relation
+package json.delivery.socialnetworkservice.app.domain
 
-import json.delivery.socialnetworkservice.app.domain.UserId
 import java.time.ZonedDateTime
 
 class Relation {
