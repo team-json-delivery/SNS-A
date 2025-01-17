@@ -16,7 +16,7 @@ class RelationTest : DescribeSpec({
 
         context("followingId가 주어졌을 때") {
 
-            val relation = Relation(UserId(1L))
+            val relation = Relation()
             val followingId = UserId(2L)
 
             it("followingId를 추가한다.") {
@@ -32,7 +32,7 @@ class RelationTest : DescribeSpec({
 
         context("followingId가 주어졌을 때") {
 
-            val relation = Relation(UserId(1L))
+            val relation = Relation()
             val followingId = UserId(2L)
             relation.following(followingId)
 

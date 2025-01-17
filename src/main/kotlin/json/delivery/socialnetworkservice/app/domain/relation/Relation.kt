@@ -3,9 +3,7 @@ package json.delivery.socialnetworkservice.app.domain.relation
 import json.delivery.socialnetworkservice.app.domain.UserId
 import java.time.ZonedDateTime
 
-class Relation(
-    val userId: UserId,
-) {
+class Relation {
     // 내가 구독하는 사람
     private val _followings: MutableMap<UserId, Following> = mutableMapOf()
     val followings: List<Following>
