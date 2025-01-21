@@ -8,8 +8,10 @@ class UserTest : DescribeSpec({
     describe("User Test") {
         it("should be created successfully") {
             val userName = "John"
-            val user = User(id = UserId(1), name = userName)
+            val userId = UserId(1)
+            val user = User(id = userId, name = userName)
             user.name shouldBe "John"
+            user.id.id shouldBe UserId(1).id
         }
 
         it("user name should not be empty") {
