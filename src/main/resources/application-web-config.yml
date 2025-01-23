@@ -1,5 +1,5 @@
 springdoc:
-  packages-to-scan: com.hmg.search.app.api
+  packages-to-scan: json.delivery.socialnetworkservice.app.api
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
   swagger-ui:
@@ -18,5 +18,5 @@ spring:
       use-big-decimal-for-floats: true
 
 swagger:
-  base-url: http://localhost:8006
+  base-url: http://localhost:8008
 
