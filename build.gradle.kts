@@ -64,6 +64,7 @@ dependencies {
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("io.kotest.extensions:kotest-extensions-spring:$kotestExtensionsSpringVersion")
     testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoVersion")
+    testImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter-kotlin:1.1.8")
 
     testImplementation("io.projectreactor:reactor-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
