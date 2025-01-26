@@ -7,13 +7,17 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
 @Repository
-class RelationRepositoryImpl : RelationRepository {
-
+class RelationRepositoryImpl(
     private val data: ConcurrentMap<UserId, Relation> = ConcurrentHashMap()
+) : RelationRepository {
 
     override fun save(relation: Relation) {
         // TODO relation를 덮어쓰는 구조라서 relation.followings 동시성 문제 존재
         data.put(relation.userId, relation)
+    }
+
+    override fun findAll(): List<Relation> {
+        return data.map { it.value }
     }
 
     override fun findByUserId(userId: UserId): Relation {
