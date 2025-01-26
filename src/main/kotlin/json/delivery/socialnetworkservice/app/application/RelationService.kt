@@ -2,17 +2,22 @@ package json.delivery.socialnetworkservice.app.application
 
 import json.delivery.socialnetworkservice.app.domain.Relation
 import json.delivery.socialnetworkservice.app.domain.UserId
+import json.delivery.socialnetworkservice.app.infrastructure.RelationRepository
 import org.springframework.stereotype.Service
 
 @Service
-class RelationService : RelationUseCase {
+class RelationService(
+    private val relationRepository: RelationRepository,
+) : RelationUseCase {
     override fun followUser(userId: UserId, followerId: UserId): Relation {
         // Relation 조회
+        val relation = relationRepository.findByUserId(userId)
 
-        // follow 추가
+        relation.following(followerId)
 
-        // Relation 영속화
-        TODO("Not yet implemented")
+        relationRepository.save(relation)
+
+        return relation
     }
 
     override fun unFollowUser(userId: UserId, followerId: UserId): Relation {
