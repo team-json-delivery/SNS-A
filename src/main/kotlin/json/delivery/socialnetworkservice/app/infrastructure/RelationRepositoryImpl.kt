@@ -3,15 +3,19 @@ package json.delivery.socialnetworkservice.app.infrastructure
 import json.delivery.socialnetworkservice.app.domain.Relation
 import json.delivery.socialnetworkservice.app.domain.UserId
 import org.springframework.stereotype.Repository
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
 
 @Repository
 class RelationRepositoryImpl : RelationRepository {
+
+    private val data: ConcurrentMap<UserId, Relation> = ConcurrentHashMap()
+
     override fun save(relation: Relation) {
-        // TODO relation 영속화
+        data.put(relation.userId, relation)
     }
 
     override fun findByUserId(userId: UserId): Relation {
-        // TODO 구현 필요
-        return Relation(userId)
+        return data[userId] ?: throw IllegalStateException("Relation이 존재하지 않습니다.")
     }
 }
