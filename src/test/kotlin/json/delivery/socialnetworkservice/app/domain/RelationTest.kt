@@ -17,10 +17,7 @@ class RelationTest : DescribeSpec({
         context("followingId가 주어졌을 때") {
 
             val relation = Relation(UserId(1))
-            val followingId = FixtureMonkey.fixture()
-                .giveMeBuilder<UserId>()
-                .set("id", Arbitraries.longs().greaterOrEqual(1))
-                .sample()
+            val followingId = UserIdMother.generate()
 
             it("followingId를 추가한다.") {
                 relation.following(followingId)
@@ -35,10 +32,7 @@ class RelationTest : DescribeSpec({
 
         context("followingId가 주어졌을 때") {
 
-            val followingId = FixtureMonkey.fixture()
-                .giveMeBuilder<UserId>()
-                .set("id", Arbitraries.longs().greaterOrEqual(1))
-                .sample()
+            val followingId = UserIdMother.generate()
             val relation = Relation(UserId(1L), mutableMapOf(followingId to Following(followingId)))
 
             it("followingId를 제거한다.") {
