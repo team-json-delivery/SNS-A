@@ -12,6 +12,7 @@ class RelationRepositoryImpl : RelationRepository {
     private val data: ConcurrentMap<UserId, Relation> = ConcurrentHashMap()
 
     override fun save(relation: Relation) {
+        // TODO relation를 덮어쓰는 구조라서 relation.followings 동시성 문제 존재
         data.put(relation.userId, relation)
     }
 
