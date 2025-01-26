@@ -4,6 +4,7 @@ import json.delivery.socialnetworkservice.app.domain.Relation
 import json.delivery.socialnetworkservice.app.domain.UserId
 
 interface RelationRepository {
+    fun save(relation: Relation)
 
     fun findByUserId(userId: UserId): Relation
 }

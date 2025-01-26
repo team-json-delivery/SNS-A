@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class RelationRepositoryImpl : RelationRepository {
+    override fun save(relation: Relation) {
+        // TODO relation 영속화
+    }
 
     override fun findByUserId(userId: UserId): Relation {
         // TODO 구현 필요
