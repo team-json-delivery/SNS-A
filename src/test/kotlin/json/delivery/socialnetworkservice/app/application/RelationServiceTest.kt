@@ -37,12 +37,12 @@ internal class RelationServiceTest(
 
             it("팔로잉 목록에 followerId를 추가한다.") {
                 every { relationRepository.findByUserId(userId) } returns relation
-                every { relationRepository.save(any()) } answers {}
+                every { relationRepository.save(relation) } answers {}
 
                 val actual = relationService.followUser(userId, followerId)
 
                 actual.followings.shouldContain(Following(followerId))
-                verify(exactly = 1) { relationRepository.save(any()) }
+                verify(exactly = 1) { relationRepository.save(relation) }
             }
         }
     }
