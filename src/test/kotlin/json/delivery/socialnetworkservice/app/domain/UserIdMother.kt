@@ -4,7 +4,7 @@ import com.navercorp.fixturemonkey.kotlin.giveMeKotlinBuilder
 import json.delivery.socialnetworkservice.FixtureMonkey
 import net.jqwik.api.Arbitraries
 
-object UserMother {
+object UserIdMother {
 
     fun generate(userId: Long? = null): UserId {
         val userFixture = FixtureMonkey.fixture()
