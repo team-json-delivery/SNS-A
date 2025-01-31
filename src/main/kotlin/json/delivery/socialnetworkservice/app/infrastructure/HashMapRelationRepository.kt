@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
 @Repository
-class RelationRepositoryImpl(
+class HashMapRelationRepository(
     private val data: ConcurrentMap<UserId, Relation> = ConcurrentHashMap()
 ) : RelationRepository {
 

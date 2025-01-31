@@ -6,15 +6,14 @@ import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldStartWith
 import io.kotest.matchers.types.shouldBeInstanceOf
 import json.delivery.socialnetworkservice.FixtureMonkey
 import json.delivery.socialnetworkservice.app.domain.Relation
 import json.delivery.socialnetworkservice.app.domain.UserIdMother
 import java.util.concurrent.ConcurrentHashMap
 
-@DisplayName("RelationRepositoryImpl")
-internal class RelationRepositoryImplTest : DescribeSpec({
+@DisplayName("HashMapRelationRepository")
+internal class HashMapRelationRepositoryTest : DescribeSpec({
 
     val userId = UserIdMother.generate()
 
@@ -22,7 +21,7 @@ internal class RelationRepositoryImplTest : DescribeSpec({
 
         context("Relation이 주어졌을 때") {
 
-            val sut = RelationRepositoryImpl()
+            val sut = HashMapRelationRepository()
             val relation = FixtureMonkey.fixture()
                 .giveMeKotlinBuilder<Relation>()
                 .set("userId", userId)
@@ -43,7 +42,7 @@ internal class RelationRepositoryImplTest : DescribeSpec({
 
         context("Relation이 존재하지 않으면") {
 
-            val sut = RelationRepositoryImpl()
+            val sut = HashMapRelationRepository()
 
             it("IllegalStateException()을 던진다.") {
 
@@ -56,7 +55,7 @@ internal class RelationRepositoryImplTest : DescribeSpec({
 
         context("Relation이 존재하면") {
 
-            val sut = RelationRepositoryImpl(
+            val sut = HashMapRelationRepository(
                 ConcurrentHashMap(mutableMapOf(userId to Relation(userId)))
             )
 
