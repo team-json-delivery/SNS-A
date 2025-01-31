@@ -19,22 +19,19 @@ internal class HashMapRelationRepositoryTest : DescribeSpec({
 
     describe("save()는") {
 
-        context("Relation이 주어졌을 때") {
+        val sut = HashMapRelationRepository()
+        val relation = FixtureMonkey.fixture()
+            .giveMeKotlinBuilder<Relation>()
+            .set("userId", userId)
+            .size("_followings", 0)
+            .sample()
 
-            val sut = HashMapRelationRepository()
-            val relation = FixtureMonkey.fixture()
-                .giveMeKotlinBuilder<Relation>()
-                .set("userId", userId)
-                .size("_followings", 0)
-                .sample()
+        it("Relation을 저장한다.") {
+            sut.save(relation)
 
-            it("Relation을 저장한다.") {
-                sut.save(relation)
+            val actual = sut.findAll()
 
-                val actual = sut.findAll()
-
-                actual.shouldContain(relation)
-            }
+            actual.shouldContain(relation)
         }
     }
 
