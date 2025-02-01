@@ -1,9 +1,13 @@
 package json.delivery.socialnetworkservice.app.domain
+import com.navercorp.fixturemonkey.kotlin.giveMeBuilder
+import com.navercorp.fixturemonkey.kotlin.giveMeOne
 import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import json.delivery.socialnetworkservice.FixtureMonkey
+import net.jqwik.api.Arbitraries
 
 @DisplayName("Relation")
 class RelationTest : DescribeSpec({
@@ -13,7 +17,10 @@ class RelationTest : DescribeSpec({
         context("followingId가 주어졌을 때") {
 
             val relation = Relation()
-            val followingId = UserId(2L)
+            val followingId = FixtureMonkey.fixture()
+                .giveMeBuilder<UserId>()
+                .set("id", Arbitraries.longs().greaterOrEqual(1))
+                .sample()
 
             it("followingId를 추가한다.") {
                 relation.following(followingId)
@@ -28,8 +35,11 @@ class RelationTest : DescribeSpec({
 
         context("followingId가 주어졌을 때") {
 
+            val followingId = FixtureMonkey.fixture()
+                .giveMeBuilder<UserId>()
+                .set("id", Arbitraries.longs().greaterOrEqual(1))
+                .sample()
             val relation = Relation()
-            val followingId = UserId(2L)
             relation.following(followingId)
 
             it("followingId를 제거한다.") {
