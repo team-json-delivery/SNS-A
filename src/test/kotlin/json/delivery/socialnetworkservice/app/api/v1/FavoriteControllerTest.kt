@@ -24,7 +24,7 @@ internal class  FavoriteControllerTest(
 
     extensions(SpringExtension)
 
-    describe("[PUT] /v1/article/{articleId}/favorite") {
+    describe("[POST] /v1/article/{articleId}/favorite") {
 
         context("올바른 요청이 들어오면") {
 
@@ -35,7 +35,7 @@ internal class  FavoriteControllerTest(
                 given(favoriteUsecase.execute(UserId(3L), "articleId"))
                     .willReturn(expected)
 
-                webTestClient.put()
+                webTestClient.post()
                     .uri("/v1/article/{articleId}/favorite", "articleId")
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)
@@ -61,7 +61,7 @@ internal class  FavoriteControllerTest(
                 given(favoriteUsecase.execute(UserId(3L), "articleId"))
                     .willThrow(ArticleNotFoundException("articleId"))
 
-                webTestClient.put()
+                webTestClient.post()
                     .uri("/v1/article/{articleId}/favorite", "articleId")
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)

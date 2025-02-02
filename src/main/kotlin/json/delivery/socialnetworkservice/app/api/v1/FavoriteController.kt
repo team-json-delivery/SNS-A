@@ -7,7 +7,7 @@ import json.delivery.socialnetworkservice.app.domain.UserId
 import org.springframework.http.HttpStatus
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -19,7 +19,7 @@ class FavoriteController(
     private val favoriteUsecase: FavoriteUsecase,
 ) {
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{articleId}/favorite")
+    @PostMapping("/{articleId}/favorite")
     fun favoriteArticle(
         @PathVariable articleId: String,
         @Validated @RequestBody request: FavoriteRequest,
