@@ -1,9 +1,6 @@
 package json.delivery.socialnetworkservice.app.api.v1.response
 
-import json.delivery.socialnetworkservice.app.application.FavoriteUsecaseOutputDto
-import json.delivery.socialnetworkservice.app.domain.Following
-import json.delivery.socialnetworkservice.app.domain.Relation
-import java.time.ZonedDateTime
+import json.delivery.socialnetworkservice.app.application.dto.FavoriteUsecaseOutputDto
 
 data class FavoriteResponse(
     val userId: Long,

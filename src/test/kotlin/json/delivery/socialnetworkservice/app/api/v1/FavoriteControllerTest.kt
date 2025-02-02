@@ -3,10 +3,9 @@ package json.delivery.socialnetworkservice.app.api.v1
 import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.extensions.spring.SpringExtension
-import io.mockk.every
 import json.delivery.socialnetworkservice.app.api.v1.request.FavoriteRequest
 import json.delivery.socialnetworkservice.app.application.FavoriteUsecase
-import json.delivery.socialnetworkservice.app.application.FavoriteUsecaseOutputDto
+import json.delivery.socialnetworkservice.app.application.dto.FavoriteUsecaseOutputDto
 import json.delivery.socialnetworkservice.app.domain.UserId
 import json.delivery.socialnetworkservice.app.exception.ArticleNotFoundException
 import org.mockito.BDDMockito.given

@@ -24,6 +24,6 @@ class FavoriteController(
         @PathVariable articleId: String,
         @Validated @RequestBody request: FavoriteRequest,
     ): FavoriteResponse {
-        return favoriteUsecase.execute(UserId(request.userId), articleId).let { FavoriteResponse(it) };
+        return FavoriteResponse(favoriteUsecase.execute(UserId(request.userId), articleId));
     }
 }

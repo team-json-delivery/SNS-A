@@ -34,7 +34,8 @@ internal class FavoriteServiceTest(
 
                     expected.articleId shouldBe articleId
                     expected.userId shouldBe userId
-                    capturedArticle.captured.hasLike(userId)
+                    val hasLike = capturedArticle.captured.hasLike(userId)
+                    hasLike shouldBe true
                 }
 
                 it("articleRepository.findById()가 한번 호출된다.") {
