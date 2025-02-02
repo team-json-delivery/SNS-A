@@ -69,5 +69,19 @@ internal class  FavoriteControllerTest(
                     .expectStatus().isNotFound
             }
         }
+
+        context("userId가 음수이면 에러가 발생한다") {
+
+            val request = FavoriteRequest(userId = -1L)
+            it("400 응답을 리턴한다.") {
+
+                webTestClient.post()
+                    .uri("/v1/article/{articleId}/favorite", "articleId")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(request)
+                    .exchange()
+                    .expectStatus().isBadRequest
+            }
+        }
     }
 },)

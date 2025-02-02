@@ -5,8 +5,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import org.springframework.web.context.request.WebRequest
-import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
@@ -14,6 +12,11 @@ class GlobalExceptionHandler {
     @ExceptionHandler(ArticleNotFoundException::class)
     fun handleArticleNotFoundException(ex: ArticleNotFoundException): ResponseEntity<String> {
         return ResponseEntity(ex.message, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleValidationExceptions(ex: IllegalArgumentException): ResponseEntity<String> {
+        return ResponseEntity(ex.message, HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(Exception::class)
