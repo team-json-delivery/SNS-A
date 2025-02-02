@@ -30,7 +30,7 @@ class UserController(
             .let { FollowResponse(it) }
     }
 
-    @PutMapping("/{userId}/un-follow")
+    @PutMapping("/{userId}/follow")
     fun unFollowUser(
         @PathVariable userId: Long,
         @Validated @RequestBody request: UnFollowRequest,

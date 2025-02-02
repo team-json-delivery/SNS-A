@@ -66,7 +66,7 @@ internal class UserControllerTest(
         }
     }
 
-    describe("[PUT] /v1/user/{userId}/un-follow") {
+    describe("[PUT] /v1/user/{userId}/follow") {
 
         context("올바른 요청이 들어오면") {
 
@@ -79,7 +79,7 @@ internal class UserControllerTest(
                     .willReturn(relation)
 
                 webTestClient.put()
-                    .uri("/v1/user/{userId}/un-follow", 1L)
+                    .uri("/v1/user/{userId}/follow", 1L)
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)
                     .exchange()
@@ -96,7 +96,7 @@ internal class UserControllerTest(
 
             it("400 응답을 한다.") {
                 webTestClient.put()
-                    .uri("/v1/user/{userId}/un-follow", 1L)
+                    .uri("/v1/user/{userId}/follow", 1L)
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)
                     .exchange()
