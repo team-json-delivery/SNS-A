@@ -21,7 +21,7 @@ class RelationService(
         return relation
     }
 
-    override fun unFollowUser(userId: UserId, followerId: UserId): Relation {
+    override fun unFollowUser(userId: UserId, unFollowerId: UserId): Relation {
         TODO("Not yet implemented")
     }
 
