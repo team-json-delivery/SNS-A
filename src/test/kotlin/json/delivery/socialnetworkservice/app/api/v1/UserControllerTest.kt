@@ -1,13 +1,16 @@
 package json.delivery.socialnetworkservice.app.api.v1
 
+import com.navercorp.fixturemonkey.kotlin.giveMeKotlinBuilder
 import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.extensions.spring.SpringExtension
+import json.delivery.socialnetworkservice.FixtureMonkey
 import json.delivery.socialnetworkservice.app.api.v1.request.FollowRequest
 import json.delivery.socialnetworkservice.app.application.RelationUseCase
 import json.delivery.socialnetworkservice.app.domain.Following
 import json.delivery.socialnetworkservice.app.domain.Relation
 import json.delivery.socialnetworkservice.app.domain.UserId
+import net.jqwik.api.Arbitraries
 import org.mockito.BDDMockito.given
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.http.MediaType
@@ -41,6 +44,23 @@ internal class UserControllerTest(
                     .bodyValue(request)
                     .exchange()
                     .expectStatus().isCreated
+            }
+        }
+
+        context("유효하지 않은 followerId일 때") {
+
+            val request = FixtureMonkey.fixture()
+                .giveMeKotlinBuilder<FollowRequest>()
+                .set("followerId", Arbitraries.longs().lessOrEqual(0))
+                .sample()
+
+            it("400 응답을 한다.") {
+                webTestClient.post()
+                    .uri("/v1/user/{userId}/follow", 1L)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(request)
+                    .exchange()
+                    .expectStatus().isBadRequest
             }
         }
     }
