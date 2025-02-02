@@ -32,6 +32,11 @@ class Article private constructor(
         return updatedAt;
     }
 
+    fun disLike(userId: UserId) {
+        likes.remove(userId)
+        updatedAt = System.currentTimeMillis()
+    }
+
     init {
         require(content.isNotBlank()) { "Content must not be blank." }
     }
