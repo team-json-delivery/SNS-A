@@ -1,21 +1,22 @@
 package json.delivery.socialnetworkservice.app.application
 
 import json.delivery.socialnetworkservice.app.application.dto.FavoriteUsecaseOutputDto
+import json.delivery.socialnetworkservice.app.application.dto.UnFavoriteUsecaseOutputDto
 import json.delivery.socialnetworkservice.app.domain.UserId
 import json.delivery.socialnetworkservice.app.infrastructure.ArticleRepository
 import org.springframework.stereotype.Service
 
 @Service
-class FavoriteService(
+class UnFavoriteService(
     private val articleRepository : ArticleRepository
-) : FavoriteUsecase {
-    override fun execute(userId: UserId, articleId: String): FavoriteUsecaseOutputDto {
+) : UnFavoriteUsecase {
+    override fun execute(userId: UserId, articleId: String): UnFavoriteUsecaseOutputDto {
         val article = articleRepository.findById(articleId)
 
-        article.addLike(userId)
+        article.disLike(userId)
 
         articleRepository.save(article)
 
-        return FavoriteUsecaseOutputDto(userId, articleId)
+        return UnFavoriteUsecaseOutputDto(userId, articleId)
     }
 }

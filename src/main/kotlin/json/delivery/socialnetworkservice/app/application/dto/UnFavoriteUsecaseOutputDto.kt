@@ -1,8 +1,8 @@
-package json.delivery.socialnetworkservice.app.application
+package json.delivery.socialnetworkservice.app.application.dto
 
 import json.delivery.socialnetworkservice.app.domain.UserId
 
-class FavoriteUsecaseOutputDto(
+class UnFavoriteUsecaseOutputDto(
     val userId: UserId,
     val articleId: String,
 )
