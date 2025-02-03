@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.bind.support.WebExchangeBindException
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
@@ -12,6 +13,14 @@ class GlobalExceptionHandler {
     @ExceptionHandler(ArticleNotFoundException::class)
     fun handleArticleNotFoundException(ex: ArticleNotFoundException): ResponseEntity<String> {
         return ResponseEntity(ex.message, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(WebExchangeBindException::class)
+    fun handleWebExchangeBindException(ex: WebExchangeBindException): ResponseEntity<String> {
+        return ResponseEntity(
+            ex.bindingResult.fieldErrors.map { it.defaultMessage }.joinToString("|"),
+            HttpStatus.BAD_REQUEST,
+        )
     }
 
     @ExceptionHandler(IllegalArgumentException::class)
