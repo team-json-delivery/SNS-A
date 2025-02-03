@@ -8,10 +8,10 @@ import json.delivery.socialnetworkservice.app.domain.Article
 import json.delivery.socialnetworkservice.app.domain.UserId
 import json.delivery.socialnetworkservice.app.infrastructure.ArticleRepository
 
-@DisplayName("FavoriteService")
-internal class FavoriteServiceTest(
+@DisplayName("UnFavoriteService")
+internal class UnFavoriteServiceTest(
     private val articleRepository: ArticleRepository = mockk(),
-    private val favoriteService: FavoriteService = FavoriteService(articleRepository),
+    private val unFavoriteService: UnFavoriteService = UnFavoriteService(articleRepository),
 ) : DescribeSpec(
     {
 
@@ -30,12 +30,12 @@ internal class FavoriteServiceTest(
                     article.addLike(userId)
                     every { articleRepository.save(capture(capturedArticle)) } returns article
 
-                    val expected = favoriteService.execute(userId, articleId)
+                    val expected = unFavoriteService.execute(userId, articleId)
 
                     expected.articleId shouldBe articleId
                     expected.userId shouldBe userId
                     val hasLike = capturedArticle.captured.hasLike(userId)
-                    hasLike shouldBe true
+                    hasLike shouldBe false
                 }
 
                 it("articleRepository.findById()가 한번 호출된다.") {

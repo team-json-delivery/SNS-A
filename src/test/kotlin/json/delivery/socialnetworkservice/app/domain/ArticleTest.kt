@@ -75,4 +75,29 @@ class ArticleTest {
 
         assertThat(actual).isGreaterThan(expected)
     }
+
+    @Test
+    @DisplayName("Dislike should update updatedAt")
+    fun test7() {
+        var longLongAgo = System.currentTimeMillis() - 1000000
+        val article = ArticleMother.generate(updatedAt = longLongAgo)
+        val expected = article.getUpdatedAt()
+
+        article.disLike(UserId(54321L))
+        val actual = article.getUpdatedAt()
+
+        assertThat(actual).isGreaterThan(expected)
+    }
+
+    @Test
+    @DisplayName("Dislike should remove like")
+    fun test8() {
+        val article = Article.create(defaultAuthor, "content")
+        val likesUser = UserId(54321L)
+        article.addLike(likesUser)
+
+        article.disLike(likesUser)
+
+        assertThat(article.hasLike(likesUser)).isFalse()
+    }
 }

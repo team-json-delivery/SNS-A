@@ -4,8 +4,8 @@ import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.extensions.spring.SpringExtension
 import json.delivery.socialnetworkservice.app.api.v1.request.FavoriteRequest
-import json.delivery.socialnetworkservice.app.application.FavoriteUsecase
-import json.delivery.socialnetworkservice.app.application.dto.FavoriteUsecaseOutputDto
+import json.delivery.socialnetworkservice.app.application.UnFavoriteUsecase
+import json.delivery.socialnetworkservice.app.application.dto.UnFavoriteUsecaseOutputDto
 import json.delivery.socialnetworkservice.app.domain.UserId
 import json.delivery.socialnetworkservice.app.exception.ArticleNotFoundException
 import org.mockito.BDDMockito.given
@@ -14,27 +14,27 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.web.reactive.server.WebTestClient
 
-@WebFluxTest(FavoriteController::class)
-@DisplayName("FavoriteController")
-internal class  FavoriteControllerTest(
+@WebFluxTest(UnFavoriteController::class)
+@DisplayName("UnFavoriteController")
+internal class  UnFavoriteControllerTest(
     private val webTestClient: WebTestClient,
-    @MockitoBean private val favoriteUsecase: FavoriteUsecase,
+    @MockitoBean private val unFavoriteUsecase: UnFavoriteUsecase,
 ) : DescribeSpec({
 
     extensions(SpringExtension)
 
-    describe("[POST] /v1/article/{articleId}/favorite") {
+    describe("[PUT] /v1/article/{articleId}/favorite") {
 
         context("올바른 요청이 들어오면") {
 
             val request = FavoriteRequest(userId = 3L)
-            val expected = FavoriteUsecaseOutputDto(UserId(3L), "articleId")
+            val expected = UnFavoriteUsecaseOutputDto(UserId(3L), "articleId")
             it("200 응답을 리턴한다.") {
 
-                given(favoriteUsecase.execute(UserId(3L), "articleId"))
+                given(unFavoriteUsecase.execute(UserId(3L), "articleId"))
                     .willReturn(expected)
 
-                webTestClient.post()
+                webTestClient.put()
                     .uri("/v1/article/{articleId}/favorite", "articleId")
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)
@@ -57,10 +57,10 @@ internal class  FavoriteControllerTest(
             val request = FavoriteRequest(userId = 3L)
             it("404 응답을 리턴한다.") {
 
-                given(favoriteUsecase.execute(UserId(3L), "articleId"))
+                given(unFavoriteUsecase.execute(UserId(3L), "articleId"))
                     .willThrow(ArticleNotFoundException("articleId"))
 
-                webTestClient.post()
+                webTestClient.put()
                     .uri("/v1/article/{articleId}/favorite", "articleId")
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)
@@ -74,7 +74,7 @@ internal class  FavoriteControllerTest(
             val request = FavoriteRequest(userId = -1L)
             it("400 응답을 리턴한다.") {
 
-                webTestClient.post()
+                webTestClient.put()
                     .uri("/v1/article/{articleId}/favorite", "articleId")
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)
