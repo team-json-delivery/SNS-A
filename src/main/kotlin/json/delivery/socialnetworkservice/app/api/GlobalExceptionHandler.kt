@@ -29,7 +29,7 @@ class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception::class)
-    fun handleRunTimeException(ex: Exception): ResponseEntity<String> {
+    fun handleGlobalException(ex: Exception): ResponseEntity<String> {
         return ResponseEntity("An unexpected error occurred: ${ex.message}", HttpStatus.INTERNAL_SERVER_ERROR)
     }
 }
