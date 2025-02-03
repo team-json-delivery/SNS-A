@@ -3,7 +3,7 @@ package json.delivery.socialnetworkservice.app.domain
 import java.util.*
 
 class Article private constructor(
-    val id: String?,
+    val id: String,
     val authorId: UserId,
     val createdAt: Long,
     private val likes: MutableList<UserId>,
