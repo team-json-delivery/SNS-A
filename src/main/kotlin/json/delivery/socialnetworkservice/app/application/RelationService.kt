@@ -21,8 +21,14 @@ class RelationService(
         return relation
     }
 
-    override fun unFollowUser(userId: UserId, followerId: UserId): Relation {
-        TODO("Not yet implemented")
+    override fun unFollowUser(userId: UserId, unFollowerId: UserId): Relation {
+        val relation = relationRepository.findByUserId(userId)
+
+        relation.unFollowing(unFollowerId)
+
+        relationRepository.save(relation)
+
+        return relation
     }
 
     override fun follower(userId: UserId): Relation {
