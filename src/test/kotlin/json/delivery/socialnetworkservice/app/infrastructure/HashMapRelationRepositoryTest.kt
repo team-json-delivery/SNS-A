@@ -1,12 +1,12 @@
 package json.delivery.socialnetworkservice.app.infrastructure
 
 import com.navercorp.fixturemonkey.kotlin.giveMeKotlinBuilder
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContain
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeInstanceOf
 import json.delivery.socialnetworkservice.FixtureMonkey
 import json.delivery.socialnetworkservice.app.domain.Relation
 import json.delivery.socialnetworkservice.app.domain.UserIdMother
@@ -41,12 +41,10 @@ internal class HashMapRelationRepositoryTest : DescribeSpec({
 
             val sut = HashMapRelationRepository()
 
-            it("IllegalStateException()을 던진다.") {
+            it("NULL을 리턴한다.") {
+                val actual = sut.findByUserId(userId)
 
-                val exception = shouldThrow<IllegalStateException> {
-                    sut.findByUserId(userId)
-                }
-                exception.message shouldBe "Relation이 존재하지 않습니다."
+                actual.shouldBeNull()
             }
         }
 
@@ -59,7 +57,7 @@ internal class HashMapRelationRepositoryTest : DescribeSpec({
             it("Relation을 리턴한다.") {
                 val actual = sut.findByUserId(userId)
 
-                actual.shouldBeInstanceOf<Relation>()
+                actual.shouldNotBeNull()
                 actual.userId shouldBe userId
             }
         }

@@ -8,5 +8,5 @@ interface RelationRepository {
 
     fun findAll(): List<Relation>
 
-    fun findByUserId(userId: UserId): Relation
+    fun findByUserId(userId: UserId): Relation?
 }
