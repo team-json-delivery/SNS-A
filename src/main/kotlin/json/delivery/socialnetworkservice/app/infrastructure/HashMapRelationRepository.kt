@@ -20,7 +20,7 @@ class HashMapRelationRepository(
         return data.map { it.value }
     }
 
-    override fun findByUserId(userId: UserId): Relation {
-        return data[userId] ?: throw IllegalStateException("Relation이 존재하지 않습니다.")
+    override fun findByUserId(userId: UserId): Relation? {
+        return data[userId]
     }
 }
