@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>SNS 컨트롤러 테스트</title>
+    <script>
+        async function sendRequest(method, url, body) {
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const result = await response.json();
+                alert(`응답 상태: ${response.status}\n응답 본문: ${JSON.stringify(result, null, 2)}`);
+            } catch (error) {
+                alert(`오류 발생: ${error}`);
+            }
+        }
+
+        function followUser(event) {
+            event.preventDefault();
+            const userId = document.getElementById("followUserId").value;
+            const followerId = document.getElementById("followerId").value;
+            sendRequest("POST", `/v1/user/${userId}/follow`, { followerId });
+        }
+
+        function unFollowUser(event) {
+            event.preventDefault();
+            const userId = document.getElementById("unFollowUserId").value;
+            const unFollowerId = document.getElementById("unFollowerId").value;
+            sendRequest("PUT", `/v1/user/${userId}/follow`, { unFollowerId });
+        }
+
+        function favoriteArticle(event) {
+            event.preventDefault();
+            const articleId = document.getElementById("favoriteArticleId").value;
+            const userId = document.getElementById("favUserId").value;
+            sendRequest("POST", `/v1/article/${articleId}/favorite`, { userId });
+        }
+
+        function unFavoriteArticle(event) {
+            event.preventDefault();
+            const articleId = document.getElementById("unFavoriteArticleId").value;
+            const userId = document.getElementById("unFavUserId").value;
+            sendRequest("PUT", `/v1/article/${articleId}/favorite`, { userId });
+        }
+    </script>
+</head>
+<body>
+<h1>SNS 컨트롤러 테스트</h1>
+
+<h2>사용자 팔로우</h2>
+<form onsubmit="followUser(event)">
+    <label>팔로우할 사용자 ID:</label>
+    <input type="text" id="followUserId" required>
+    <label>팔로우하는 사용자 ID:</label>
+    <input type="text" id="followerId" required>
+    <button type="submit">팔로우</button>
+</form>
+
+<h2>사용자 언팔로우</h2>
+<form onsubmit="unFollowUser(event)">
+    <label>언팔로우할 사용자 ID:</label>
+    <input type="text" id="unFollowUserId" required>
+    <label>언팔로우하는 사용자 ID:</label>
+    <input type="text" id="unFollowerId" required>
+    <button type="submit">언팔로우</button>
+</form>
+
+<h2>게시물 좋아요</h2>
+<form onsubmit="favoriteArticle(event)">
+    <label>게시물 ID:</label>
+    <input type="text" id="favoriteArticleId" required>
+    <label>사용자 ID:</label>
+    <input type="text" id="favUserId" required>
+    <button type="submit">좋아요</button>
+</form>
+
+<h2>게시물 좋아요 취소</h2>
+<form onsubmit="unFavoriteArticle(event)">
+    <label>게시물 ID:</label>
+    <input type="text" id="unFavoriteArticleId" required>
+    <label>사용자 ID:</label>
+    <input type="text" id="unFavUserId" required>
+    <button type="submit">좋아요 취소</button>
+</form>
+</body>
+</html>
