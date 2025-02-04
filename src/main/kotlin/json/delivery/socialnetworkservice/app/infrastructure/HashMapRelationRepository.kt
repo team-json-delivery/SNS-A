@@ -13,14 +13,14 @@ class HashMapRelationRepository(
 
     override fun save(relation: Relation) {
         // TODO relation를 덮어쓰는 구조라서 relation.followings 동시성 문제 존재
-        data.put(relation.userId, relation)
+        data[relation.userId] = relation
     }
 
     override fun findAll(): List<Relation> {
         return data.map { it.value }
     }
 
-    override fun findByUserId(userId: UserId): Relation {
-        return data[userId] ?: throw IllegalStateException("Relation이 존재하지 않습니다.")
+    override fun findByUserId(userId: UserId): Relation? {
+        return data[userId]
     }
 }
