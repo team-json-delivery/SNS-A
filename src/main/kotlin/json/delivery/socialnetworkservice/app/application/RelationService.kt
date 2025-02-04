@@ -12,6 +12,7 @@ class RelationService(
     override fun followUser(userId: UserId, followerId: UserId): Relation {
         // Relation 조회
         val relation = relationRepository.findByUserId(userId)
+            ?: Relation(userId = userId)
 
         // TODO 중복 요청 검증 추가 필요. 서비스 레이어에서 할 것인지? following() 함수 내부에서 할 것인지?
         relation.following(followerId)
@@ -22,7 +23,7 @@ class RelationService(
     }
 
     override fun unFollowUser(userId: UserId, unFollowerId: UserId): Relation {
-        val relation = relationRepository.findByUserId(userId)
+        val relation = relationRepository.findByUserId(userId)!!
 
         relation.unFollowing(unFollowerId)
 
