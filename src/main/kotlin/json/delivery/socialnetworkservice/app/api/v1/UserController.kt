@@ -7,6 +7,7 @@ import json.delivery.socialnetworkservice.app.application.RelationUseCase
 import json.delivery.socialnetworkservice.app.domain.UserId
 import org.springframework.http.HttpStatus
 import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -20,6 +21,12 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(
     private val relationUseCase: RelationUseCase,
 ) {
+    @GetMapping("/{userId}")
+    fun getFollow(@PathVariable userId: Long): FollowResponse {
+        return relationUseCase.follower(UserId(userId))
+            .let { FollowResponse(it) }
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{userId}/follow")
     fun followUser(
