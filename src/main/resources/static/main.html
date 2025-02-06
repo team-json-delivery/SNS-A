@@ -6,6 +6,7 @@
     <script>
         let isLoggedIn = false;
         let loginUserId = 0;
+        let followings = []; // 팔로우한 사용자 목록 저장
 
         function login(event) {
             event.preventDefault();
@@ -27,8 +28,6 @@
             }
         }
 
-
-
         async function sendRequest(method, url, body) {
             try {
                 const response = await fetch(url, {
@@ -36,23 +35,37 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(body)
                 });
+
                 const result = await response.json();
                 alert(`응답 상태: ${response.status}\n응답 본문: ${JSON.stringify(result, null, 2)}`);
+
+                return result; // result 반환
             } catch (error) {
                 alert(`오류 발생: ${error}`);
+                return null;
             }
         }
 
-        function followUser(event) {
+        async function followUser(event) {
             event.preventDefault();
             const followerId = document.getElementById("followerId").value;
-            sendRequest("POST", `/v1/user/${loginUserId}/follow`, { followerId });
+
+            const result = await sendRequest("POST", `/v1/user/${loginUserId}/follow`, { followerId });
+
+            if (result && result.followings) {
+                updateFollowings(result.followings);
+            }
         }
 
-        function unFollowUser(event) {
+        async function unFollowUser(event) {
             event.preventDefault();
             const unFollowerId = document.getElementById("unFollowerId").value;
-            sendRequest("PUT", `/v1/user/${loginUserId}/follow`, { unFollowerId });
+
+            const result = await sendRequest("PUT", `/v1/user/${loginUserId}/follow`, { unFollowerId });
+
+            if (result && result.followings) {
+                updateFollowings(result.followings);
+            }
         }
 
         function favoriteArticle(event) {
@@ -67,6 +80,18 @@
             const articleId = document.getElementById("unFavoriteArticleId").value;
             const userId = document.getElementById("unFavUserId").value;
             sendRequest("PUT", `/v1/article/${articleId}/favorite`, { userId });
+        }
+
+        function updateFollowings(newFollowings) {
+            followings = newFollowings;
+            const followingList = document.getElementById("followingList");
+            followingList.innerHTML = ""; // 기존 목록 초기화
+
+            followings.forEach(user => {
+                const listItem = document.createElement("li");
+                listItem.innerText = `UserID: ${user.userId}, Followed at: ${new Date(user.createdAt).toLocaleString()}`;
+                followingList.appendChild(listItem);
+            });
         }
     </script>
 </head>
@@ -84,6 +109,12 @@
 
 <section id="testSection" style="display: none;">
     <h2 id="loginInfo"></h2>
+
+    <h2>팔로잉 목록</h2>
+    <ul id="followingList">
+        <!-- 동적으로 팔로잉 목록이 추가됨 -->
+    </ul>
+
     <h2>사용자 팔로우</h2>
     <form onsubmit="followUser(event)">
         <label>팔로우할 사용자 ID:</label>
