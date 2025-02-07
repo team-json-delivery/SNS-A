@@ -26,7 +26,7 @@ class MysqlArticleRepository(
     }
 
     override fun save(article: Article): Article {
-        val articleEntity = ArticleDtoFactory.toEntity(article)
+        val articleEntity = ArticleDtoFactory.toDto(article)
         articleJpaClient.save(articleEntity)
 
         article.likes.forEach { userId ->

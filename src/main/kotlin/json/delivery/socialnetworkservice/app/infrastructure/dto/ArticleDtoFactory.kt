@@ -5,7 +5,7 @@ import json.delivery.socialnetworkservice.app.entity.ArticleDto
 
 object ArticleDtoFactory {
 
-    fun toEntity(article: Article): ArticleDto {
+    fun toDto(article: Article): ArticleDto {
         return ArticleDto(
             id = article.id,
             authorId = article.authorId.id,
