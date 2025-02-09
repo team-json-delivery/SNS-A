@@ -12,5 +12,14 @@ spring:
     include:
       - caffeine-config
       - web-config
+  datasource:
+    url: jdbc:mysql://mysql:3306/mydb?serverTimezone=UTC&characterEncoding=UTF-8
+    username: myuser
+    password: mypassword
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
 
