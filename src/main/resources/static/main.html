@@ -80,15 +80,13 @@
         function favoriteArticle(event) {
             event.preventDefault();
             const articleId = document.getElementById("favoriteArticleId").value;
-            const userId = document.getElementById("favUserId").value;
-            sendRequest("POST", `/v1/article/${articleId}/favorite`, { userId });
+            sendRequest("POST", `/v1/article/${articleId}/favorite`, { loginUserId });
         }
 
         function unFavoriteArticle(event) {
             event.preventDefault();
             const articleId = document.getElementById("unFavoriteArticleId").value;
-            const userId = document.getElementById("unFavUserId").value;
-            sendRequest("PUT", `/v1/article/${articleId}/favorite`, { userId });
+            sendRequest("PUT", `/v1/article/${articleId}/favorite`, { loginUserId });
         }
 
         function updateFollowings(newFollowings) {
@@ -142,8 +140,6 @@
     <form onsubmit="favoriteArticle(event)">
         <label>게시물 ID:</label>
         <input type="text" id="favoriteArticleId" required>
-        <label>사용자 ID:</label>
-        <input type="text" id="favUserId" required>
         <button type="submit">좋아요</button>
     </form>
 
@@ -151,8 +147,6 @@
     <form onsubmit="unFavoriteArticle(event)">
         <label>게시물 ID:</label>
         <input type="text" id="unFavoriteArticleId" required>
-        <label>사용자 ID:</label>
-        <input type="text" id="unFavUserId" required>
         <button type="submit">좋아요 취소</button>
     </form>
 </section>
