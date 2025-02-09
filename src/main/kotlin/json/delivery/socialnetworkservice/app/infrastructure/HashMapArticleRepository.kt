@@ -5,6 +5,7 @@ import json.delivery.socialnetworkservice.app.exception.ArticleNotFoundException
 import org.springframework.stereotype.Repository
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
+import json.delivery.socialnetworkservice.app.domain.UserId
 
 @Repository
 class HashMapArticleRepository : ArticleRepository {
@@ -17,4 +18,8 @@ class HashMapArticleRepository : ArticleRepository {
         articleMap[article.id] = article
         return article
     }
+
+    override suspend fun findAllByAuthorIds(userIds: List<UserId>): List<Article> =
+        articleMap.values.filter { it.authorId in userIds }.sortedByDescending { it.getUpdatedAt() }
+
 }
