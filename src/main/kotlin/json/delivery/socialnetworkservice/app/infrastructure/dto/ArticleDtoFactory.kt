@@ -1,7 +1,7 @@
-package json.delivery.socialnetworkservice.app.mapper
+package json.delivery.socialnetworkservice.app.infrastructure.dto
 
 import json.delivery.socialnetworkservice.app.domain.Article
-import json.delivery.socialnetworkservice.app.entity.ArticleDto
+import json.delivery.socialnetworkservice.app.infrastructure.dto.ArticleDto
 
 object ArticleDtoFactory {
 
