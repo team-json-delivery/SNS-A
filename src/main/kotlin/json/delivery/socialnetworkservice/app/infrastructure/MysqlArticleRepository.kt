@@ -2,9 +2,9 @@ package json.delivery.socialnetworkservice.app.infrastructure
 
 import json.delivery.socialnetworkservice.app.domain.Article
 import json.delivery.socialnetworkservice.app.domain.UserId
-import json.delivery.socialnetworkservice.app.infrastructure.dto.ArticleLikeDto
 import json.delivery.socialnetworkservice.app.exception.ArticleNotFoundException
-import json.delivery.socialnetworkservice.app.mapper.ArticleDtoFactory
+import json.delivery.socialnetworkservice.app.infrastructure.dto.ArticleDtoFactory
+import json.delivery.socialnetworkservice.app.infrastructure.dto.ArticleLikeDto
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -36,5 +36,22 @@ class MysqlArticleRepository(
         }
 
         return article
+    }
+
+    override suspend fun findAllByAuthorIds(userIds: List<UserId>): List<Article> {
+        val articles = articleJpaClient.findAllByAuthorIdIn(userIds.map { it.id })
+        val likes = articleLikeJpaClient.findByArticleIdIn(articles.map { it.id })
+            .groupBy { it.articleId }
+
+        return articles.map { article ->
+            Article.of(
+                id = article.id,
+                authorId = article.authorId,
+                createdAt = article.createdAt,
+                likes = likes[article.id]?.map { it.id!! } ?: listOf(),
+                content = article.content,
+                updatedAt = article.updatedAt,
+            )
+        }
     }
 }
