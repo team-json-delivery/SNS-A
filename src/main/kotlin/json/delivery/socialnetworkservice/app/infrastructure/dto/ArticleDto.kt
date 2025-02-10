@@ -4,7 +4,7 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "articles")
-data class ArticleDto(
+class ArticleDto(
     @Id
     val id: String,
 
