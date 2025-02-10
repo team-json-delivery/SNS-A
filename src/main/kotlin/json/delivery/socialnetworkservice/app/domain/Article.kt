@@ -6,7 +6,7 @@ class Article private constructor(
     val id: String,
     val authorId: UserId,
     val createdAt: Long,
-    private val likes: MutableList<UserId>,
+    val likes: MutableList<UserId>,
     private var content: String,
     private var updatedAt: Long
 ) {
@@ -53,6 +53,23 @@ class Article private constructor(
                 createdAt = System.currentTimeMillis(),
                 updatedAt = System.currentTimeMillis(),
                 likes = arrayListOf()
+            )
+        }
+        fun of(
+            id: String,
+            authorId: Long,
+            content: String,
+            createdAt: Long,
+            updatedAt: Long,
+            likes: List<Long>
+        ): Article {
+            return Article(
+                id = id,
+                authorId = UserId(authorId),
+                createdAt = createdAt,
+                updatedAt = updatedAt,
+                content = content,
+                likes = likes.map { UserId(it) }.toMutableList()
             )
         }
     }

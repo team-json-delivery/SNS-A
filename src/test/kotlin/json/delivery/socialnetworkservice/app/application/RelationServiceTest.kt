@@ -2,22 +2,18 @@ package json.delivery.socialnetworkservice.app.application
 
 import com.navercorp.fixturemonkey.customizer.InnerSpec
 import com.navercorp.fixturemonkey.kotlin.giveMeKotlinBuilder
-import com.navercorp.fixturemonkey.kotlin.set
 import io.kotest.core.annotation.DisplayName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldNotContain
-import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import json.delivery.socialnetworkservice.FixtureMonkey
 import json.delivery.socialnetworkservice.app.domain.Following
 import json.delivery.socialnetworkservice.app.domain.Relation
-import json.delivery.socialnetworkservice.app.domain.UserId
 import json.delivery.socialnetworkservice.app.domain.UserIdMother
 import json.delivery.socialnetworkservice.app.infrastructure.RelationRepository
-import net.jqwik.api.Arbitraries
 
 @DisplayName("RelationService")
 internal class RelationServiceTest(
