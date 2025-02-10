@@ -33,6 +33,6 @@ class RelationService(
     }
 
     override fun follower(userId: UserId): Relation {
-        TODO("Not yet implemented")
+        return relationRepository.findByUserId(userId) ?: Relation(userId = userId)
     }
 }

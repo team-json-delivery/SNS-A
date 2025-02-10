@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>SNS 컨트롤러 테스트</title>
+    <script>
+        let isLoggedIn = false;
+        let loginUserId = 0;
+        let followings = []; // 팔로우한 사용자 목록 저장
+
+        function login(event) {
+            event.preventDefault();
+            loginUserId = document.getElementById("loginUserId").value;
+
+            isLoggedIn = true;
+            updateUI();
+            getFollow();
+            alert("로그인 성공!");
+        }
+
+        function updateUI() {
+            if (isLoggedIn) {
+                document.getElementById("loginSection").style.display = "none";
+                document.getElementById("testSection").style.display = "block";
+                document.getElementById("loginInfo").innerText = `${loginUserId} 로그인 중`;
+            } else {
+                document.getElementById("loginSection").style.display = "block";
+                document.getElementById("testSection").style.display = "none";
+            }
+        }
+
+        async function sendRequest(method, url, body) {
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+
+                const result = await response.json();
+                alert(`응답 상태: ${response.status}\n응답 본문: ${JSON.stringify(result, null, 2)}`);
+
+                return result; // result 반환
+            } catch (error) {
+                alert(`오류 발생: ${error}`);
+                return null;
+            }
+        }
+
+        async function getFollow() {
+            const result = await sendRequest("GET", `/v1/user/${loginUserId}`);
+
+            if (result && result.followings) {
+                updateFollowings(result.followings);
+            }
+        }
+
+        async function followUser(event) {
+            event.preventDefault();
+            const followerId = document.getElementById("followerId").value;
+
+            const result = await sendRequest("POST", `/v1/user/${loginUserId}/follow`, { followerId });
+
+            if (result && result.followings) {
+                updateFollowings(result.followings);
+            }
+        }
+
+        async function unFollowUser(event) {
+            event.preventDefault();
+            const unFollowerId = document.getElementById("unFollowerId").value;
+
+            const result = await sendRequest("PUT", `/v1/user/${loginUserId}/follow`, { unFollowerId });
+
+            if (result && result.followings) {
+                updateFollowings(result.followings);
+            }
+        }
+
+        function favoriteArticle(event) {
+            event.preventDefault();
+            const articleId = document.getElementById("favoriteArticleId").value;
+            sendRequest("POST", `/v1/article/${articleId}/favorite`, { loginUserId });
+        }
+
+        function unFavoriteArticle(event) {
+            event.preventDefault();
+            const articleId = document.getElementById("unFavoriteArticleId").value;
+            sendRequest("PUT", `/v1/article/${articleId}/favorite`, { loginUserId });
+        }
+
+        function updateFollowings(newFollowings) {
+            followings = newFollowings;
+            const followingList = document.getElementById("followingList");
+            followingList.innerHTML = ""; // 기존 목록 초기화
+
+            followings.forEach(user => {
+                const listItem = document.createElement("li");
+                listItem.innerText = `UserID: ${user.userId}, Followed at: ${new Date(user.createdAt).toLocaleString()}`;
+                followingList.appendChild(listItem);
+            });
+        }
+    </script>
+</head>
+<body>
+<h1>SNS 컨트롤러 테스트</h1>
+
+<section id="loginSection">
+    <h2>로그인</h2>
+    <form onsubmit="login(event)">
+        <label>아이디:</label>
+        <input type="text" id="loginUserId" required>
+        <button type="submit">로그인</button>
+    </form>
+</section>
+
+<section id="testSection" style="display: none;">
+    <h2 id="loginInfo"></h2>
+
+    <h2>팔로잉 목록</h2>
+    <ul id="followingList">
+        <!-- 동적으로 팔로잉 목록이 추가됨 -->
+    </ul>
+
+    <h2>사용자 팔로우</h2>
+    <form onsubmit="followUser(event)">
+        <label>팔로우할 사용자 ID:</label>
+        <input type="text" id="followerId" required>
+        <button type="submit">팔로우</button>
+    </form>
+
+    <h2>사용자 언팔로우</h2>
+    <form onsubmit="unFollowUser(event)">
+        <label>언팔로우할 사용자 ID:</label>
+        <input type="text" id="unFollowerId" required>
+        <button type="submit">언팔로우</button>
+    </form>
+
+    <h2>게시물 좋아요</h2>
+    <form onsubmit="favoriteArticle(event)">
+        <label>게시물 ID:</label>
+        <input type="text" id="favoriteArticleId" required>
+        <button type="submit">좋아요</button>
+    </form>
+
+    <h2>게시물 좋아요 취소</h2>
+    <form onsubmit="unFavoriteArticle(event)">
+        <label>게시물 ID:</label>
+        <input type="text" id="unFavoriteArticleId" required>
+        <button type="submit">좋아요 취소</button>
+    </form>
+</section>
+</body>
+</html>
