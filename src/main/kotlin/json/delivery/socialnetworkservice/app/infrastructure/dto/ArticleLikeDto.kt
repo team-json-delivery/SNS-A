@@ -1,4 +1,4 @@
-package json.delivery.socialnetworkservice.app.entity
+package json.delivery.socialnetworkservice.app.infrastructure.dto
 
 import jakarta.persistence.*
 

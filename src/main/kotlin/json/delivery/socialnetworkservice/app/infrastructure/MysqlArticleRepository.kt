@@ -1,7 +1,8 @@
 package json.delivery.socialnetworkservice.app.infrastructure
 
 import json.delivery.socialnetworkservice.app.domain.Article
-import json.delivery.socialnetworkservice.app.entity.ArticleLikeDto
+import json.delivery.socialnetworkservice.app.domain.UserId
+import json.delivery.socialnetworkservice.app.infrastructure.dto.ArticleLikeDto
 import json.delivery.socialnetworkservice.app.exception.ArticleNotFoundException
 import json.delivery.socialnetworkservice.app.mapper.ArticleDtoFactory
 import org.springframework.stereotype.Repository
